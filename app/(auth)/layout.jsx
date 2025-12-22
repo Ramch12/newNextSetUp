@@ -10,7 +10,6 @@ const AuthComponentLayOut = ({ children }) => {
   return (
     <html lang="en">
       <body>{children}</body>
-      <Footer />
     </html>
   );
 };
