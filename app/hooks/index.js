@@ -2,7 +2,7 @@ import { default as axios } from "axios";
 import { useEffect, useState } from "react";
 //https://jsonplaceholder.typicode.com/posts
 const apiClient = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "https://694603e0ed253f51719cd8c1.mockapi.io",
   auth: true,
 });
 

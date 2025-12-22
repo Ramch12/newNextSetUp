@@ -4,28 +4,41 @@ import { useState, useEffect } from "react";
 const useCourseHook = () => {
   const [courseList, setCourseList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const listCourses = async () => {
-    const { data } = await apiClient("/api/v1/course");
-    return data;
+
+  const fetchAllCourse = async () => {
+    try {
+      setLoading(true);
+      const { data } = await apiClient("/api/v1/course");
+      setCourseList(data);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (courseId) => {
+    try {
+      await apiClient.delete(`/course/${courseId}`);
+      await fetchAllCourse();
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  const handleEdit = (courseId) => {
+    console.log("courseId", courseId);
   };
 
   useEffect(() => {
-    const fetchAllCourse = async () => {
-      try {
-        setLoading(true);
-        const data = await listCourses();
-        setCourseList(data);
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchAllCourse();
   }, []);
+
   return {
     courseList,
-    loading
+    loading,
+    handleDelete,
+    handleEdit,
   };
 };
 
-export { useCourseHook };
+export { useCourseHook, listCourses };
