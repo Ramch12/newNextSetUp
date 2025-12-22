@@ -11,9 +11,6 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Get callback URL or default to dashboard
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -22,20 +19,38 @@ export default function LoginForm() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false, // Don't auto redirect
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
+      console.log("res", res);
+      if (!res.ok) {
+        // Login failed
+        return null;
+      }
+      const userData = await res.json();
+      console.log("userData", userData);
 
-      if (result?.error) {
+      if (!userData?.status) {
         setError("Invalid email or password");
         setLoading(false);
       } else {
-        // Login successful
-        router.push(callbackUrl);
+        // OTP successfully sent
+        router.push(
+          `/verify-otp?email=${encodeURIComponent(
+            email
+          )}&password=${encodeURIComponent(password)}`
+        );
         router.refresh();
       }
     } catch (error) {

@@ -1,5 +1,5 @@
 // middleware.js
-import { auth } from "./auth";
+import { auth } from "./app/auth";
 import { NextResponse } from "next/server";
 
 export default auth((req) => {
@@ -12,12 +12,18 @@ export default auth((req) => {
   const protectedRoutes = ["/dashboard", "/profile", "/settings"];
   const adminRoutes = ["/admin"];
 
+  console.log("dashboard Lay===>");
+  console.log("pathname===>", pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
   const isAuthRoute = authRoutes.includes(pathname);
   const isProtectedRoute = protectedRoutes.some((route) =>
     pathname.startsWith(route)
   );
   const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+
+  if (isPublicRoute) {
+    return NextResponse.redirect(new URL(pathname, req.url));
+  }
 
   // Redirect to dashboard if logged in user tries to access auth pages
   if (isAuthRoute && isLoggedIn) {

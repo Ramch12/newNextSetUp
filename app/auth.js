@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleAuthProvider from "next-auth/providers/google";
 
 export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   providers: [
@@ -17,40 +18,60 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
       },
       async authorize(credentials) {
         try {
-          const res = await fetch("http://localhost:5000/api/auth/login", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-            }),
-          });
-
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/verifyOtp`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: credentials.email,
+                password: credentials.password,
+                otp: credentials.otp,
+              }),
+            }
+          );
           if (!res.ok) {
-            // Login failed
             return null;
           }
           const data = await res.json();
-
           return {
             id: data.user.id || data.user._id,
             email: data.user.email,
             name: data.user.name,
-            role: data.user.role,
-            image: data.user.image,
-            backendToken: data.token, // Your backend JWT token
+            image: data.user.profilePic,
+            backendToken: data.authtoken,
           };
-        } catch (error) {}
+        } catch (error) {
+          console.log("Loggged In Error", error);
+        }
       },
     }),
+    GoogleAuthProvider({
+      client: "Google",
+      clientId: process.env.GOOGLE_AUTH_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+    }),
   ],
-  callbacks: () => {},
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.backendToken = user.backendToken;
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = token.role;
+      session.backendToken = token.backendToken;
+      return session;
+    },
+  },
   pages: {
     signIn: "/login",
-    // signOut: '/auth/signout',
-    // error: '/auth/error',
+    signOut: "/auth/signout",
+    error: "/auth/error",
   },
   session: {
     strategy: "jwt",

@@ -1,11 +1,11 @@
 // app/dashboard/page.js
-import { auth } from "@/auth";
+import { auth } from "@/app/auth";
 import { redirect } from "next/navigation";
 import LogoutButton from "@/app/components/LogoutButton";
 
 export default async function DashboardPage() {
+  console.log("this is a dashboard Route");
   const session = await auth();
-
   if (!session) {
     redirect("/login");
   }

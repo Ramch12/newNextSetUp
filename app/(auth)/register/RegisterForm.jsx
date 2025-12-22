@@ -20,6 +20,7 @@ export default function RegisterForm() {
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
+    const mobileNum = formData.get("mobileNum");
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -28,13 +29,12 @@ export default function RegisterForm() {
     }
 
     try {
-      // Call your existing backend register API
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/register`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({ name, email, password, mobileNum }),
         }
       );
 
@@ -45,22 +45,8 @@ export default function RegisterForm() {
         setLoading(false);
         return;
       }
-
-      // Auto login after successful registration
-      const signInResult = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (signInResult?.error) {
-        // Registration succeeded but login failed
-        router.push("/login?registered=true");
-      } else {
-        // Both registration and login succeeded
-        router.push("/dashboard");
-        router.refresh();
-      }
+      router.push("/login?registered=true");
+      router.refresh();
     } catch (error) {
       setError("Something went wrong");
       setLoading(false);
@@ -93,6 +79,18 @@ export default function RegisterForm() {
           <input
             type="email"
             name="email"
+            required
+            className="w-full px-4 py-2 border rounded-lg"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">
+            Mobile Number
+          </label>
+          <input
+            type="text"
+            name="mobileNum"
             required
             className="w-full px-4 py-2 border rounded-lg"
           />
