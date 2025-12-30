@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useSession } from 'next-auth/react'
 
 export default function Home({ children }) {
   const router = useRouter();

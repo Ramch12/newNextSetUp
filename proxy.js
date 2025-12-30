@@ -7,7 +7,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   // Define your route types
-  const publicRoutes = ["/", "/about", "/contact"];
+  const publicRoutes = ["/", "/about", "/contact", "/gaana"];
   const authRoutes = ["/login", "/register"];
   const protectedRoutes = ["/dashboard", "/profile", "/settings"];
   const adminRoutes = ["/admin"];
@@ -22,7 +22,7 @@ export default auth((req) => {
   const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
 
   if (isPublicRoute) {
-    return NextResponse.redirect(new URL(pathname, req.url));
+    return NextResponse.next();
   }
 
   // Redirect to dashboard if logged in user tries to access auth pages
