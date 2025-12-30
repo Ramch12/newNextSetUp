@@ -12,8 +12,6 @@ export default auth((req) => {
   const protectedRoutes = ["/dashboard", "/profile", "/settings"];
   const adminRoutes = ["/admin"];
 
-  console.log("dashboard Lay===>");
-  console.log("pathname===>", pathname);
   const isPublicRoute = publicRoutes.includes(pathname);
   const isAuthRoute = authRoutes.includes(pathname);
   const isProtectedRoute = protectedRoutes.some((route) =>
@@ -27,7 +25,7 @@ export default auth((req) => {
 
   // Redirect to dashboard if logged in user tries to access auth pages
   if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/dashboard/profile", req.url));
   }
 
   // Redirect to login if accessing protected route without auth

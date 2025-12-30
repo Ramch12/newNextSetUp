@@ -12,15 +12,14 @@ export default async function ProtectedLayout({ children }) {
     <div className="min-h-screen overflow-hidden">
       <div className="flex p-6 h-screen gap-4">
         {/* Sidebar */}
-        <aside className="w-[25%] border border-black rounded-md overflow-hidden">
+        {/* bg-[#10172a] use this for backgroud color */}
+        <aside className="w-[20%] border border-black rounded-md overflow-hidden">
           <Sidebar />
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 border border-black rounded-md overflow-hidden">
-          <div>
-            
-          </div>
+        {/* bg-[#10172a] use this for backgroud color */}
+        <main className="flex-1 border border-black rounded-md overflow-hidden  text-cyan-400">
           {children}
         </main>
       </div>

@@ -11,6 +11,10 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleGoogleSignUp = () => {
+    signIn("google", { callback: "/dashboard" });
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
@@ -98,6 +102,16 @@ export default function LoginForm() {
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
+
+      <div className="w-full mt-2 rounded-2xl">
+        <button
+          type=""
+          className="w-full h-full bg-[#b8fdf7] cursor-pointer  font-semibold p-2 rounded-2xl"
+          onClick={handleGoogleSignUp}
+        >
+          Continue with google
+        </button>
+      </div>
 
       <p className="text-center mt-4 text-sm">
         Don't have an account?

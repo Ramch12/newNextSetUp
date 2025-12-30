@@ -56,15 +56,18 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
   ],
   callbacks: {
     async jwt({ token, user }) {
+      console.log("token, user===>", { token, user });
       if (user) {
         token.backendToken = user.backendToken;
         token.role = user.role;
+        // token.picture = picture;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.role = token.role;
       session.backendToken = token.backendToken;
+      // session.user.picture = token.picture;
       return session;
     },
   },
