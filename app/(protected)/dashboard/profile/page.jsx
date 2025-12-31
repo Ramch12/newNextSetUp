@@ -32,6 +32,11 @@ export default function Profile() {
         border: "none",
         borderRadius: "0",
       },
+      overlay: {
+        backgroundColor: "transparent",
+        backdropFilter: "none",
+        zIndex: 1000,
+      },
     });
   };
 
@@ -40,10 +45,7 @@ export default function Profile() {
       <div className="max-full">
         {/* div for profile menu */}
         <div className="fixed top-10 right-10 cursor-pointer">
-          <button
-            onClick={handleMenuOpen}
-            className="rounded"
-          >
+          <button onClick={handleMenuOpen} className="rounded cursor-pointer">
             <HiDotsVertical />
           </button>
         </div>
@@ -63,7 +65,7 @@ export default function Profile() {
                 <strong>Role:</strong> {data?.user?.role}
               </p>
               <p>
-                <strong>User ID:</strong> {data?.user?.id}
+                <strong>User ID:</strong> {data?.user.id}
               </p>
             </div>
             <div className="mr-10 w-40 h-40 border rounded-sm">

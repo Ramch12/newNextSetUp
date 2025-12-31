@@ -11,6 +11,20 @@ th, td{
   border: 1px solid #ddd;
 }
 
+@layer utilities{
+    .word-space-sm {
+    word-spacing: 0.125rem;
+  }
+
+  .word-space-md {
+    word-spacing: 0.25rem;
+  }
+
+  .word-space-lg {
+    word-spacing: 0.5rem;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

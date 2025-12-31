@@ -1,8 +1,9 @@
 export const plans = [
   {
-    id: "free",
+    id: 1,
     name: "Free",
-    description: "Perfect for individuals getting started with basic project tracking.",
+    description:
+      "Perfect for individuals getting started with basic project tracking.",
     monthlyAmount: 0,
     yearlyAmount: 0,
     trialDays: 0,
@@ -19,7 +20,7 @@ export const plans = [
   },
 
   {
-    id: "starter",
+    id: 2,
     name: "Starter",
     description: "Ideal for freelancers managing small projects and clients.",
     monthlyAmount: 499,
@@ -38,9 +39,10 @@ export const plans = [
   },
 
   {
-    id: "basic",
+    id: 3,
     name: "Basic",
-    description: "Best for solo professionals who need more control and reporting.",
+    description:
+      "Best for solo professionals who need more control and reporting.",
     monthlyAmount: 999,
     yearlyAmount: 9999,
     trialDays: 14,
@@ -57,7 +59,7 @@ export const plans = [
   },
 
   {
-    id: "team",
+    id: 4,
     name: "Team",
     description: "Designed for small teams collaborating on multiple projects.",
     monthlyAmount: 1999,
@@ -68,15 +70,11 @@ export const plans = [
     support: "Priority Email Support",
     isPopular: true,
     isActive: true,
-    features: [
-      "Team collaboration",
-      "Role-based access",
-      "Shared dashboards",
-    ],
+    features: ["Team collaboration", "Role-based access", "Shared dashboards"],
   },
 
   {
-    id: "growth",
+    id: 5,
     name: "Growth",
     description: "For growing teams needing advanced workflows and automation.",
     monthlyAmount: 2999,
@@ -95,9 +93,10 @@ export const plans = [
   },
 
   {
-    id: "business",
+    id: 6,
     name: "Business",
-    description: "Powerful tools for mid-sized organizations managing complex projects.",
+    description:
+      "Powerful tools for mid-sized organizations managing complex projects.",
     monthlyAmount: 4999,
     yearlyAmount: 49999,
     trialDays: 30,
@@ -106,17 +105,14 @@ export const plans = [
     support: "Priority Chat Support",
     isPopular: false,
     isActive: true,
-    features: [
-      "Advanced reporting",
-      "Audit logs",
-      "Team performance insights",
-    ],
+    features: ["Advanced reporting", "Audit logs", "Team performance insights"],
   },
 
   {
-    id: "professional",
+    id: 7,
     name: "Professional",
-    description: "Advanced solution for professionals who need full visibility and control.",
+    description:
+      "Advanced solution for professionals who need full visibility and control.",
     monthlyAmount: 6999,
     yearlyAmount: 69999,
     trialDays: 30,
@@ -125,17 +121,14 @@ export const plans = [
     support: "Dedicated Email Support",
     isPopular: false,
     isActive: true,
-    features: [
-      "Custom workflows",
-      "API access",
-      "Advanced integrations",
-    ],
+    features: ["Custom workflows", "API access", "Advanced integrations"],
   },
 
   {
-    id: "enterprise",
+    id: 8,
     name: "Enterprise",
-    description: "Enterprise-grade solution with security, scalability, and compliance.",
+    description:
+      "Enterprise-grade solution with security, scalability, and compliance.",
     monthlyAmount: 9999,
     yearlyAmount: 99999,
     trialDays: 30,
@@ -152,9 +145,10 @@ export const plans = [
   },
 
   {
-    id: "enterprise_plus",
+    id: 9,
     name: "Enterprise Plus",
-    description: "Built for large enterprises requiring maximum performance and customization.",
+    description:
+      "Built for large enterprises requiring maximum performance and customization.",
     monthlyAmount: 14999,
     yearlyAmount: 149999,
     trialDays: 30,
@@ -163,19 +157,34 @@ export const plans = [
     support: "24/7 Dedicated Support",
     isPopular: false,
     isActive: true,
+    features: ["24/7 premium support", "Custom SLA", "White-labeling"],
+  },
+
+  {
+    id: 10,
+    name: "Custom",
+    description: "Tailored pricing and features based on your business needs.",
+    monthlyAmount: 20000,
+    yearlyAmount: 400000,
+    trialDays: 0,
+    maxUsers: "Custom",
+    maxProjects: "Custom",
+    support: "Dedicated Technical Team",
+    isPopular: false,
+    isActive: true,
     features: [
-      "24/7 premium support",
-      "Custom SLA",
-      "White-labeling",
+      "Custom features",
+      "Dedicated infrastructure",
+      "Personalized onboarding",
     ],
   },
 
   {
-    id: "custom",
-    name: "Custom",
-    description: "Tailored pricing and features based on your business needs.",
-    monthlyAmount: null,
-    yearlyAmount: null,
+    id: 11,
+    name: "Custom Plus",
+    description: "Extended custom plan with premium support.",
+    monthlyAmount: 14999,
+    yearlyAmount: 149999,
     trialDays: 0,
     maxUsers: "Custom",
     maxProjects: "Custom",
@@ -188,12 +197,13 @@ export const plans = [
       "Personalized onboarding",
     ],
   },
+
   {
-    id: "custom",
-    name: "Custom",
-    description: "Tailored pricing and features based on your business needs.",
-    monthlyAmount: null,
-    yearlyAmount: null,
+    id: 12,
+    name: "Custom Ultimate",
+    description: "Maximum customization for enterprise-grade requirements.",
+    monthlyAmount: 14999,
+    yearlyAmount: 149999,
     trialDays: 0,
     maxUsers: "Custom",
     maxProjects: "Custom",
@@ -206,22 +216,4 @@ export const plans = [
       "Personalized onboarding",
     ],
   },
-  {
-    id: "custom",
-    name: "Custom",
-    description: "Tailored pricing and features based on your business needs.",
-    monthlyAmount: null,
-    yearlyAmount: null,
-    trialDays: 0,
-    maxUsers: "Custom",
-    maxProjects: "Custom",
-    support: "Dedicated Technical Team",
-    isPopular: false,
-    isActive: true,
-    features: [
-      "Custom features",
-      "Dedicated infrastructure",
-      "Personalized onboarding",
-    ],
-  }
 ];

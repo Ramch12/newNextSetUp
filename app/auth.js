@@ -41,7 +41,8 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
             email: data.user.email,
             name: data.user.name,
             image: data.user.profilePic,
-            backendToken: data.authtoken,
+            role: data.user.role,
+            backendToken: data.token,
           };
         } catch (error) {
           console.log("Loggged In Error", error);

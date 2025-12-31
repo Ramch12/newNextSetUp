@@ -21,7 +21,7 @@ export default function RegisterForm() {
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
-    const mobileNum = formData.get("mobileNum");
+    const phoneNumber = formData.get("mobileNum");
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -35,7 +35,7 @@ export default function RegisterForm() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, mobileNum }),
+          body: JSON.stringify({ name, email, password, phoneNumber }),
         }
       );
 

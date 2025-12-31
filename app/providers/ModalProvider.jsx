@@ -18,6 +18,9 @@ const ModalProvider = ({ children }) => {
       padding: "20px",
       ...modalState.props.customContent,
     },
+    overlay: {
+      ...modalState.props.overlay,
+    },
   };
 
   const openModal = (Component, props = {}) => {
