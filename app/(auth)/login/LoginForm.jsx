@@ -4,6 +4,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import SocialLoginBtn from "@/app/components/ui/socialLoginBtn";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -11,9 +12,9 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleGoogleSignUp = () => {
-    signIn("google", { callback: "/dashboard" });
-  };
+  // const handleGoogleSignUp = () => {
+  //   signIn("google", { callback: "/dashboard" });
+  // };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -97,21 +98,22 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-400"
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-400 cursor-pointer"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 
-      <div className="w-full mt-2 rounded-2xl">
+      {/* <div className="w-full mt-2 rounded-2xl">
         <button
           type=""
-          className="w-full h-full bg-[#b8fdf7] cursor-pointer  font-semibold p-2 rounded-2xl"
+          className="w-full cursor-pointer bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-400"
           onClick={handleGoogleSignUp}
         >
           Continue with google
         </button>
-      </div>
+      </div> */}
+      <SocialLoginBtn />
 
       <p className="text-center mt-4 text-sm">
         Don't have an account?

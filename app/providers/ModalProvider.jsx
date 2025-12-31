@@ -16,6 +16,7 @@ const ModalProvider = ({ children }) => {
       margin: "auto",
       borderRadius: "10px",
       padding: "20px",
+      ...modalState.props.customContent,
     },
   };
 

@@ -3,7 +3,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+// import { signIn } from "next-auth/react";
+import SocialLoginBtn from "@/app/components/ui/socialLoginBtn";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -128,7 +129,7 @@ export default function RegisterForm() {
           {loading ? "Creating account..." : "Register"}
         </button>
       </form>
-
+      <SocialLoginBtn />
       <p className="text-center mt-4 text-sm">
         Already have an account?
         <a href="/login" className="text-blue-500 ml-1">
