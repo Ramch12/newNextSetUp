@@ -1,18 +1,55 @@
 "use client";
 import { plans } from "@/app/constants";
-import { useState } from "react";
-import { IoCheckmarkOutline } from "react-icons/io5";
+import { useState, useContext } from "react";
+import { IoCheckmarkOutline, IoLanguage } from "react-icons/io5";
 import Toggle from "@/app/components/common/toggleButton";
+import { fetchAvailablePlans } from "@/app/services/plan.service";
+import { useQuery } from "@tanstack/react-query";
+import { PlanSkalatonLoader } from "@/app/components/loaders/index";
+import { useSession } from "next-auth/react";
+import { ModalContext } from "@/app/providers/ModalProvider";
+import PlanDetailsModel from "@/app/components/ui/modal/plandetailsModal";
 
 const Plans = () => {
   const [changePlanDuration, setChangePlanDuration] = useState(false);
+  const { data: session, status } = useSession();
+  const { openModal, closeModal } = useContext(ModalContext);
+
+  const {
+    error,
+    data: planList,
+    isLoading,
+  } = useQuery({
+    queryKey: ["planData"],
+    queryFn: fetchAvailablePlans,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    enabled: status === "authenticated" && !!session?.backendToken,
+  });
+
   const onToggle = (value) => {
     setChangePlanDuration(value);
   };
+
+  const handlePlanDetailsShow = (planId) => {
+    openModal(
+      <PlanDetailsModel
+        planId={planId}
+        billingCycle={changePlanDuration ? "YEARLY" : "MONTHLY"}
+        currency={"INR"}
+        paymentMethod={"UPI"}
+        closeModal={closeModal}
+      />
+    );
+  };
+
+  const showLoading =
+    status === "loading" || (isLoading && status === "authenticated");
+
   return (
     <div className="p-3">
       <div className="border border-solid border-black h-24 w-full rounded-sm flex justify-center items-center shadow-xl">
-        <h3 className="text-center leading-tight text-xl sm:text-2xl md:text-3xl lg:text-4xl text-black">
+        <h3 className="text-center text-md text-2xl text-black font-semibold">
           Select a suitable Plans that help to grow your business
         </h3>
       </div>
@@ -23,64 +60,77 @@ const Plans = () => {
         </div>
       </div>
       <div className="grid grid-cols-4 gap-2 mt-2 overflow-y-scroll h-132">
-        {plans.map((plan) => {
-          return (
-            <div
-              key={plan.id}
-              className="border border-solid border-black rounded-lg shadow-sm px-2 py-4 text-center text-black bg-gray-300 mb-4"
-            >
-              <p className="text-2xl font-bold border-b pb-2">{plan.name}</p>
-              <p className="mt-2 text-sm">{plan.description}</p>
-              <div className="mt-3 text-center">
-                {/* Price */}
-                <div className="flex justify-center items-start gap-x-1">
-                  <span className="text-xl font-semibold text-black/70">$</span>
-                  <span className="text-5xl font-bold text-black">
-                    {changePlanDuration
-                      ? plan.yearlyAmount
-                      : plan.monthlyAmount}
-                  </span>
-                </div>
+        {showLoading
+          ? Array.from({ length: 6 }).map((item, index) => {
+              return <PlanSkalatonLoader key={index} />;
+            })
+          : (planList || []).map((plan, index) => {
+              return (
+                <div
+                  key={plan._id}
+                  className="border border-solid border-black rounded-lg shadow-sm px-2 py-4 text-center text-black bg-gray-300 mb-4"
+                >
+                  <p className="text-2xl font-bold border-b pb-2">
+                    {plan.name}
+                  </p>
+                  <p className="mt-2 text-sm">{plan.description}</p>
+                  <div className="mt-3 text-center">
+                    {/* Price */}
+                    <div className="flex justify-center items-start gap-x-1">
+                      <span className="text-xl font-semibold text-black/70">
+                        $
+                      </span>
+                      <span className="text-5xl font-bold text-black">
+                        {changePlanDuration
+                          ? plan.yearlyAmount
+                          : plan.monthlyAmount}
+                      </span>
+                    </div>
 
-                {/* Meta info */}
-                <div className="mt-2 flex justify-center gap-x-1 text-xs text-black/70">
-                  <span className="inline-flex items-center gap-x-1">
-                    <span>Billed</span>
-                    <span className="font-semibold">
-                      {changePlanDuration ? "Yearly" : "Monthly"}
-                    </span>
-                  </span>
-
-                  <span className="inline-flex items-center gap-x-1">
-                    <span className="font-semibold">{plan.maxUsers}</span>
-                    <span>Max active users</span>
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-3">
-                <button className="font-semibold border border-solid border-black w-full p-2 rounded-sm  bg-blue-400 hover:bg-blue-500 cursor-pointer">
-                  Get Started
-                </button>
-                <ul className="mt-3">
-                  {plan.features.map((feature, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className="flex flex-start items-center text-sm"
-                      >
-                        <span className="mr-2 my-1">
-                          <IoCheckmarkOutline color="green" size={20} />
+                    {/* Meta info */}
+                    <div className="mt-2 flex justify-center gap-x-1 text-xs text-black/70">
+                      <span className="inline-flex items-center gap-x-1">
+                        <span>Billed</span>
+                        <span className="font-semibold">
+                          {changePlanDuration ? "Yearly" : "Monthly"}
                         </span>
-                        {feature}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-          );
-        })}
+                      </span>
+
+                      <span className="inline-flex items-center gap-x-1">
+                        <span className="font-semibold">{plan.maxUsers}</span>
+                        <span>Max active users</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-3">
+                    <button
+                      onClick={() => {
+                        handlePlanDetailsShow(plan._id);
+                      }}
+                      className="font-semibold border border-solid border-black w-full p-2 rounded-sm  bg-blue-400 hover:bg-blue-500 cursor-pointer"
+                    >
+                      Get Started
+                    </button>
+                    <ul className="mt-3">
+                      {plan.features.map((feature, index) => {
+                        return (
+                          <li
+                            key={index}
+                            className="flex flex-start items-center text-sm"
+                          >
+                            <span className="mr-2 my-1">
+                              <IoCheckmarkOutline color="green" size={20} />
+                            </span>
+                            {feature}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              );
+            })}
       </div>
     </div>
   );

@@ -217,3 +217,8 @@ export const plans = [
     ],
   },
 ];
+
+export const CURRENT_CONTANT = {
+    INR:"₹",
+    USD:"$"
+} 

@@ -70,7 +70,7 @@ export default function Profile() {
             </div>
             <div className="mr-10 w-40 h-40 border rounded-sm">
               <Image
-                src={data?.user.image}
+                src={data?.user?.image || `${process.env.NEXT_PUBLIC_SERVER_URL}/profile_pic.png`}
                 width={160}
                 height={100}
                 alt="Profile-Picture"

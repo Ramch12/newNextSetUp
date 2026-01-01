@@ -3,6 +3,7 @@ import Providers from "./providers";
 import "./globals.css";
 import ModalProvider from "./providers/ModalProvider";
 import QueryProvider from "./providers/QueryProvider";
+import { AxiosProvider } from "@/app/providers/axiosProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +26,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          <Providers>
-            <ModalProvider>{children}</ModalProvider>
-          </Providers>
-        </QueryProvider>
+        <Providers>
+          <AxiosProvider>
+            <QueryProvider>
+              <ModalProvider>{children}</ModalProvider>
+            </QueryProvider>
+          </AxiosProvider>
+        </Providers>
       </body>
     </html>
   );
