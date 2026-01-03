@@ -2,16 +2,13 @@
 import { redirect } from "next/navigation";
 import LogoutButton from "@/app/components/LogoutButton";
 import Image from "next/image";
-import { ModalContext } from "../../../providers/ModalProvider";
-import { useContext, useState } from "react";
 import { useSession } from "next-auth/react";
-import ProfileModal from "@/app/components/ui/modal/profileModal";
-import { HiDotsVertical } from "react-icons/hi";
+
 
 export default function Profile() {
   console.log("this is a dashboard Route");
   const session = useSession();
-  const { openModal, closeModal } = useContext(ModalContext);
+
 
   if (!session) {
     redirect("/login");
@@ -19,36 +16,11 @@ export default function Profile() {
 
   const { data } = session;
 
-  const handleMenuOpen = () => {
-    openModal(<ProfileModal closeModal={closeModal} />, {
-      customContent: {
-        top: "26px",
-        right: "26px",
-        left: "auto",
-        bottom: "auto",
-        width: "280px",
-        height: "auto",
-        padding: "0",
-        border: "none",
-        borderRadius: "0",
-      },
-      overlay: {
-        backgroundColor: "transparent",
-        backdropFilter: "none",
-        zIndex: 1000,
-      },
-    });
-  };
-
+ 
   return (
     <div className="p-8">
       <div className="max-full">
         {/* div for profile menu */}
-        <div className="fixed top-10 right-10 cursor-pointer">
-          <button onClick={handleMenuOpen} className="rounded cursor-pointer">
-            <HiDotsVertical />
-          </button>
-        </div>
         <h1 className="text-3xl font-bold mb-4">User Profile</h1>
 
         <div className="bg-white p-6 rounded-lg shadow-lg inset-shadow-sm">

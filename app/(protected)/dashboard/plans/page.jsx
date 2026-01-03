@@ -47,13 +47,11 @@ const Plans = () => {
     status === "loading" || (isLoading && status === "authenticated");
 
   return (
-    <div className="p-3">
-      <div className="border border-solid border-black h-24 w-full rounded-sm flex justify-center items-center shadow-xl">
-        <h3 className="text-center text-md text-2xl text-black font-semibold">
-          Select a suitable Plans that help to grow your business
-        </h3>
-      </div>
-      <div className="py-2 flex justify-end items-center mr-5">
+    <div className="p-2">
+      <div className="py-2 flex justify-between items-center mr-5">
+        <div className="">
+          <p>Select a plan that grow your business</p>
+        </div>
         <div className="flex justify-between items-center min-w-44">
           <span className="inline-block">Change Duration</span>
           <Toggle onToggle={onToggle} />

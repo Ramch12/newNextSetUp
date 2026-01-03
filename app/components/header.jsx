@@ -1,7 +1,43 @@
-import React from "react";
+"use client";
+
+import { useContext } from "react";
+import { ModalContext } from "../providers/ModalProvider";
+import ProfileModal from "@/app/components/ui/modal/profileModal";
+import { CgProfile } from "react-icons/cg";
+
 
 const Header = () => {
-  return <div className="w-full border border-solid border-black">Header</div>;
+  const { openModal, closeModal } = useContext(ModalContext);
+  const handleMenuOpen = () => {
+    openModal(<ProfileModal closeModal={closeModal} />, {
+      customContent: {
+        top: "33px",
+        right: "32px",
+        left: "auto",
+        bottom: "auto",
+        width: "280px",
+        height: "auto",
+        padding: "0",
+        border: "none",
+        borderRadius: "0",
+      },
+      overlay: {
+        backgroundColor: "transparent",
+        backdropFilter: "none",
+        zIndex: 1000,
+      },
+    });
+  };
+
+  return (
+    <div className="w-full ">
+      <div className="fixed top-10 right-10 cursor-pointer">
+        <button onClick={handleMenuOpen} className="rounded cursor-pointer">
+          <CgProfile size={30}/>
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Header;

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import api from "@/app/config/axios";
+import { signOut } from "next-auth/react";
 
 export function AxiosProvider({ children }) {
   const { data: session, status } = useSession();
@@ -18,6 +19,7 @@ export function AxiosProvider({ children }) {
   useEffect(() => {
     const interceptor = api.interceptors.request.use(
       (config) => {
+        console.log("interceptor request hit!");
         if (tokenRef.current) {
           config.headers.Authorization = `Bearer ${tokenRef.current}`;
         }
@@ -27,8 +29,23 @@ export function AxiosProvider({ children }) {
         return Promise.reject(error);
       }
     );
+    const responseInterceptor = api.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      async (error) => {
+        if (error?.response?.status === 401) {
+          console.log("JWT expired- logging out");
+          await signOut({
+            callbackUrl: "/login",
+          });
+        }
+        Promise.resolve(error);
+      }
+    );
     return () => {
       api.interceptors.request.eject(interceptor);
+      api.interceptors.response.eject(responseInterceptor);
     };
   }, []);
 

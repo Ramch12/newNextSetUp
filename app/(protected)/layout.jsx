@@ -1,7 +1,8 @@
 import AuthWrapper from "../components/AuthWrapper";
-import { redirect } from "next/navigation";
 import { auth } from "@/app/auth";
 import Sidebar from "../components/sidebar";
+import Header from "../components/header";
+
 export default async function ProtectedLayout({ children }) {
   console.log("dashboard layout");
   const session = await auth();
@@ -20,6 +21,11 @@ export default async function ProtectedLayout({ children }) {
         {/* Main Content */}
         {/* bg-[#10172a] use this for backgroud color */}
         <main className="flex-1 border border-black rounded-md overflow-hidden  text-cyan-400">
+          <div className="w-full h-24 p-2">
+            <div className="border border-solid border-black h-full rounded-md">
+              <Header />
+            </div>
+          </div>
           {children}
         </main>
       </div>
