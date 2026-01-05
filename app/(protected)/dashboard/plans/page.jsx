@@ -9,11 +9,12 @@ import { PlanSkalatonLoader } from "@/app/components/loaders/index";
 import { useSession } from "next-auth/react";
 import { ModalContext } from "@/app/providers/ModalProvider";
 import PlanDetailsModel from "@/app/components/ui/modal/plandetailsModal";
+import { useSelector } from "react-redux";
 
 const Plans = () => {
   const [changePlanDuration, setChangePlanDuration] = useState(false);
   const { data: session, status } = useSession();
-  console.log("status", status)
+  const stateData = useSelector((state) => state.auth);
   const { openModal, closeModal } = useContext(ModalContext);
 
   const {
