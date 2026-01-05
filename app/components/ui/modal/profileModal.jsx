@@ -1,9 +1,13 @@
 import LogoutButton from "../../LogoutButton";
 import Link from "next/link";
+import { useMe } from "@/app/hooks/userHook";
+import { Loader } from "@/app/components/loaders/index";
+
 const ProfileModal = ({ closeModal }) => {
   const handleMenuClick = () => {
     closeModal();
   };
+  const { data: userDetails, isLoading, error } = useMe();
   return (
     <div className="border border-silid border-black rounded-md">
       <div className="p-4 border-b flex justify-between">
@@ -31,7 +35,13 @@ const ProfileModal = ({ closeModal }) => {
         >
           <div className="w-full">
             <p>Current Plan</p>
-            <span className="text-amber-600">Pro</span>
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <span className="text-amber-600">
+                {userDetails?.userPlansDetails?.planId?.name}
+              </span>
+            )}
           </div>
           <Link
             href="/dashboard/plans"

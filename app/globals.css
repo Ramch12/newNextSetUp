@@ -5,14 +5,15 @@
   --foreground: #171717;
 }
 
-th, td{
+th,
+td {
   text-align: center;
   padding: 8px 12px;
   border: 1px solid #ddd;
 }
 
-@layer utilities{
-    .word-space-sm {
+@layer utilities {
+  .word-space-sm {
     word-spacing: 0.125rem;
   }
 
@@ -24,6 +25,19 @@ th, td{
     word-spacing: 0.5rem;
   }
 }
+
+@layer components {
+  .btn {
+    @apply w-28 p-2 rounded-md font-semibold cursor-pointer;
+  }
+  .btn-danger {
+    @apply bg-red-300;
+  }
+  .btn-primary {
+    @apply bg-indigo-500 text-white;
+  }
+}
+
 
 @theme inline {
   --color-background: var(--background);

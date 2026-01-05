@@ -80,4 +80,15 @@ const OrderSummarySkeleton = () => {
   );
 };
 
-export { PlanSkalatonLoader, OrderSummarySkeleton };
+const Loader = () => {
+  return (
+    <div
+      className="w-30 h-30 rounded-full 
+            border-16 border-gray-200 
+            border-t-16 border-t-blue-500 
+            animate-spin"
+    ></div>
+  );
+};
+
+export { PlanSkalatonLoader, OrderSummarySkeleton, Loader };

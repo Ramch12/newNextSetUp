@@ -19,7 +19,7 @@ export const { auth, handlers, signIn, signOut, unstable_update } = NextAuth({
       async authorize(credentials) {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/verifyOtp`,
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/verifyOtp`,
             {
               method: "POST",
               headers: {
