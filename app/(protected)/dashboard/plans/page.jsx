@@ -13,6 +13,7 @@ import PlanDetailsModel from "@/app/components/ui/modal/plandetailsModal";
 const Plans = () => {
   const [changePlanDuration, setChangePlanDuration] = useState(false);
   const { data: session, status } = useSession();
+  console.log("status", status)
   const { openModal, closeModal } = useContext(ModalContext);
 
   const {
@@ -57,7 +58,7 @@ const Plans = () => {
           <Toggle onToggle={onToggle} />
         </div>
       </div>
-      <div className="grid grid-cols-4 gap-2 mt-2 overflow-y-scroll h-132">
+      <div className="grid grid-cols-4 gap-2 mt-2 overflow-y-scroll h-180">
         {showLoading
           ? Array.from({ length: 6 }).map((item, index) => {
               return <PlanSkalatonLoader key={index} />;

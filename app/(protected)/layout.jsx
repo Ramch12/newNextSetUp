@@ -1,14 +1,23 @@
+// 'use client'
 import AuthWrapper from "../components/AuthWrapper";
-import { auth } from "@/app/auth";
+import { auth, signOut } from "@/app/auth";
 import Sidebar from "../components/sidebar";
 import Header from "../components/header";
+// import { useEffect } from 'react';
+// import {useSession} from 'next-auth/react'
 
 export default async function ProtectedLayout({ children }) {
   console.log("dashboard layout");
   const session = await auth();
-  // if (!session) {
-  //   redirect("/login");
-  // }
+  const {expires, user} = session;
+  const isSessionExpired = new Date().getTime() > new Date(expires).getTime()
+
+  if (!session || isSessionExpired) {
+    signOut({
+      redirect:true,
+      redirectTo:"/login"
+    })
+  }
   return (
     <div className="min-h-screen overflow-hidden">
       <div className="flex p-6 h-screen gap-4">
