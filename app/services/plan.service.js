@@ -20,11 +20,20 @@ const createOrder = async (props) => {
 
 const createPaymentLink = async (orderId) => {
   try {
-    const { data } = await api.post("/plan/create-payment-link", {orderId});
-    return data
+    const { data } = await api.post("/plan/create-payment-link", { orderId });
+    return data;
   } catch (error) {
     console.log("Error while creating paymentLink the order", error);
   }
 };
 
-export { fetchAvailablePlans, createOrder, createPaymentLink };
+const requestRefund = async () => {
+  try {
+    const { data } = await api.post("/plan/request-refund",{});
+    return data;
+  } catch (error) {
+    console.log("Error while requestRefund", error);
+  }
+};
+
+export { fetchAvailablePlans, createOrder, createPaymentLink, requestRefund };

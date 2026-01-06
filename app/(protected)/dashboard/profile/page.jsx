@@ -3,11 +3,14 @@ import { redirect } from "next/navigation";
 import LogoutButton from "@/app/components/LogoutButton";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import {useDispatch} from 'react-redux';
+import {setDarkTheme, setWhiteTheme} from '@/app/store/slices/ui.slice'
 
 
 export default function Profile() {
   console.log("this is a dashboard Route");
   const session = useSession();
+  const dispatch = useDispatch();
 
 
   if (!session) {
@@ -15,6 +18,24 @@ export default function Profile() {
   }
 
   const { data } = session;
+
+  const handleChangeTheme = (mode) => {
+    if (mode === "dark") {
+      dispatch(
+        setDarkTheme({
+          theme: "dark",
+          layout: "compact",
+        })
+      );
+    } else {
+      dispatch(
+        setWhiteTheme({
+          theme: "light",
+          layout: "comprehensive",
+        })
+      );
+    }
+  };
 
  
   return (
@@ -53,6 +74,10 @@ export default function Profile() {
           <div className="mt-6 flex">
             <LogoutButton />
           </div>
+        </div>
+        <div className="w-full flex justify-around mt-10">
+          <button onClick={()=>{handleChangeTheme("dark")}} className="p-2 bg-green-300 border cursor-pointer rounded-md">Change Theme</button>
+          <button onClick={()=>{handleChangeTheme("light")}} className="p-2 bg-green-300 border cursor-pointer rounded-md">Change Theme</button>
         </div>
       </div>
     </div>
